@@ -67,44 +67,73 @@ function habilitarOctetos(){
 
 function verificarIP()
 {
-
     let o1 = parseInt(document.getElementById("txtoct1").value);
     let o2 = parseInt(document.getElementById("txtoct2").value);
     let o3 = parseInt(document.getElementById("txtoct3").value);
     let o4 = parseInt(document.getElementById("txtoct4").value);
 
-    if (
-        isNaN(o1) || isNaN(o2) || isNaN(o3) || isNaN(o4) ||
-        o1 < 0 || o1 > 255 ||
-        o2 < 0 || o2 > 255 ||
-        o3 < 0 || o3 > 255 ||
-        o4 < 0 || o4 > 255
-    ){
-        alert("Los octetos deben estar entre 0 y 255");
+    let errores = [];
+
+    if (isNaN(o1) || o1 < 0 || o1 > 255) {
+        errores.push("Primer octeto (" + o1 + ")");
+        document.getElementById("txtoct1").value = "";
+    }
+
+    if (isNaN(o2) || o2 < 0 || o2 > 255) {
+        errores.push("Segundo octeto (" + o2 + ")");
+        document.getElementById("txtoct2").value = "";
+    }
+
+    if (isNaN(o3) || o3 < 0 || o3 > 255) {
+        errores.push("Tercer octeto (" + o3 + ")");
+        document.getElementById("txtoct3").value = "";
+    }
+
+    if (isNaN(o4) || o4 < 0 || o4 > 255) {
+        errores.push("Cuarto octeto (" + o4 + ")");
+        document.getElementById("txtoct4").value = "";
+    }
+
+    if (errores.length > 0) {
+
+        let mensaje = "Los siguientes octetos están fuera del rango permitido (0 - 255):\n\n";
+
+        for (let i = 0; i < errores.length; i++) {
+            mensaje += errores[i] + "\n";
+        }
+
+        alert(mensaje);
         return;
     }
 
-    if(botonseleccionado === 1 && (o1 < 0 || o1 > 127)){
-        alert("No pertenece a Clase A");
-        return;
+    // Validar la clase seleccionada
+    if (botonseleccionado === 1) {
+
+        if (o1 < 0 || o1 > 127) {
+            alert("La IP ingresada no pertenece a la Clase A");
+            return;
+        }
+
+    } else if (botonseleccionado === 2) {
+
+        if (o1 < 128 || o1 > 191) {
+            alert("La IP ingresada no pertenece a la Clase B");
+            return;
+        }
+
+    } else if (botonseleccionado === 3) {
+
+        if (o1 < 192 || o1 > 223) {
+            alert("La IP ingresada no pertenece a la Clase C");
+            return;
+        }
     }
 
-    if(botonseleccionado === 2 && (o1 < 128 || o1 > 191)){
-        alert("No pertenece a Clase B");
-        return;
-    }
-
-    if(botonseleccionado === 3 && (o1 < 192 || o1 > 223)){
-        alert("No pertenece a Clase C");
-        return;
-    }
-
-    alert("IP Verificada");
+    alert("IP Verificada Correctamente");
 
     document.getElementById("cmdgenerar").disabled = false;
     document.getElementById("txtsub").disabled = false;
 }
-
 
 function cmdgenerar_Click() {
 
