@@ -131,8 +131,14 @@ function verificarIP()
 
     alert("IP Verificada Correctamente");
 
-    document.getElementById("cmdgenerar").disabled = false;
-    document.getElementById("txtsub").disabled = false;
+// Bloquear los octetos
+document.getElementById("txtoct1").disabled = true;
+document.getElementById("txtoct2").disabled = true;
+document.getElementById("txtoct3").disabled = true;
+document.getElementById("txtoct4").disabled = true;
+
+document.getElementById("cmdgenerar").disabled = false;
+document.getElementById("txtsub").disabled = false;
 }
 
 function cmdgenerar_Click() {
